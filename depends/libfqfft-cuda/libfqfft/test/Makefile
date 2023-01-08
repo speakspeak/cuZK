@@ -1,0 +1,5 @@
+e:
+	nvcc -g -G -arch=sm_35 -rdc=true --expt-extended-lambda ./evaluation_domain_test.cu ../../depends/libff-cuda/common/utils.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_pp.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_pairing.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_g2.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_g1.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_init.cu  ../../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu ../../depends/libstl-cuda/memory.cu -o evaluation_domain_test
+
+p:
+	nvcc -g -G  -arch=sm_35 -rdc=true --expt-extended-lambda ./polynomial_arithmetic_test.cu ../../depends/libff-cuda/common/utils.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_pp.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_pairing.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_g2.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_g1.cu ../../depends/libff-cuda/curves/alt_bn128/alt_bn128_init.cu  ../../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu ../../depends/libstl-cuda/memory.cu -o polynomial_arithmetic_test

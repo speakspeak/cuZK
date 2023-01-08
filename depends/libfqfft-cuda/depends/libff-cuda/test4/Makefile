@@ -1,0 +1,2 @@
+all:
+	nvcc -rdc=true ./test4.cu ../common/utils.cu ../curves/alt_bn128/alt_bn128_pp.cu ../curves/alt_bn128/alt_bn128_pairing.cu ../curves/alt_bn128/alt_bn128_g2.cu ../curves/alt_bn128/alt_bn128_g1.cu ../curves/alt_bn128/alt_bn128_init.cu  ../mini-mp-cuda/mini-mp-cuda.cu  -o test4
