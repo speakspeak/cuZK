@@ -2,9 +2,7 @@
 
 This library is an efficient GPU implemetation of zkSNARK. It contains source code of the paper **cuZK: Accelerating Zero-Knowledge Proof with A Faster Parallel Multi-Scalar Multiplication Algorithm on GPUs** submitted to TCHES 2023.
 
-## Author and License
-
-cuZK is developed by **Anonymity**.
+## License
 
 This library is licensed under the Apache License Version 2.0 and MIT licenses.
 
