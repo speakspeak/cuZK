@@ -155,8 +155,8 @@ void* multi_init_params(void* params)
     Mem* device_mem = (Mem*) params;
     cudaSetDevice(device_mem->device_id);
     size_t init_size = 1024 * 1024 * 1024;
-    init_size *= 20;
-    if( cudaMalloc( (void**)&device_mem->mem, init_size ) != cudaSuccess) printf("device malloc error!\n");
+    init_size *= 1;
+    if( cudaMalloc( (void**)&device_mem->mem, init_size ) != cudaSuccess) printf("device malloc error!");
     libstl::initAllocator(device_mem->mem, init_size);
     init_params<<<1, 1>>>();
     cudaDeviceSynchronize();
@@ -279,13 +279,16 @@ int main(int argc, char* argv[])
     int deviceCount;
     cudaGetDeviceCount( &deviceCount );
     CUTThread  thread[deviceCount];
+    printf( "We have %d devices \n", deviceCount);
 
     bls12_381_pp_host::init_public_params();
+    printf( "Start on device=0 \n");
     cudaSetDevice(0);
 
     size_t num_v = (size_t) (1 << log_size);
 
     // params init 
+    printf( "Init params... ");
     Mem device_mem[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
     {
@@ -299,6 +302,7 @@ int main(int argc, char* argv[])
     }
 
     // instance init
+    printf( "Init instances... ");
     instance_params* ip[deviceCount];
     Instance instance[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
@@ -316,6 +320,7 @@ int main(int argc, char* argv[])
     instance_init_host(&hip);
 
     // elements generation
+    printf( "Generate elements... ");
     MSM_params<bls12_381_pp>* mp[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
     {

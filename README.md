@@ -15,6 +15,21 @@ Our experiments can be finished in the following setup.
 3. gcc 7.5.0
 4. Nvidia V100 (32 GB)
 
+## Dependencies
+
+Install `git` and `libgmp3-dev`.
+
+```console
+apt-get install git
+apt-get install libgmp3-dev
+```
+
+Get known your [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability), 
+see [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
+
+
+
+
 ## Build
 
 First we need to make sure [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-11-5-0-download-archive) is installed.
