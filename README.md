@@ -27,7 +27,7 @@ apt-get install libgmp3-dev
 ```
 
 Get known your [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability), 
-see also [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
+see [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
 
 
 
