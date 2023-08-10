@@ -6,16 +6,14 @@ This library is an efficient GPU implemetation of zkSNARK. It contains source co
 
 This library is licensed under the Apache License Version 2.0 and MIT licenses.
 
-## Requirement
+## Requirements
 
-Our experiments can be finished in the following setup.
+The original experiments were accompolished in the following setup:
 
 1. Ubuntu 20.04
 2. CUDA 11.5
 3. gcc 7.5.0
 4. Nvidia V100 (32 GB)
-
-## Dependencies
 
 I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags).
 
@@ -25,7 +23,6 @@ apt-get update
 apt-get install git
 apt-get install libgmp3-dev
 ```
-
 Get known your [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability), 
 see [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
 
