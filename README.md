@@ -17,9 +17,11 @@ Our experiments can be finished in the following setup.
 
 ## Dependencies
 
-Install `git` and `libgmp3-dev`.
+I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags).
 
+Within a container, install `git` and `libgmp3-dev`:
 ```console
+apt-get update
 apt-get install git
 apt-get install libgmp3-dev
 ```
