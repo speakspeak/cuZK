@@ -15,17 +15,34 @@ The original experiments were accompolished in the following setup:
 3. gcc 7.5.0
 4. Nvidia V100 (32 GB)
 
-I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags).
+I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which should match the installed CUDA version (check with `nvidia-smi`).
 
-Within a container, install `git` and `libgmp3-dev`:
+Start the container mounting the working directory with the github source code:
+```console
+docker run -d \
+   -it \
+   --name nvidia-cuda \
+   --runtime=nvidia \
+   --mount type=bind,source=$(pwd),target=/home \
+   --privileged \
+   nvidia/cuda:11.6.2-devel-ubuntu20.04
+```
+Within the running container, install `git` and `libgmp3-dev`:
 ```console
 apt-get update
-apt-get install git
-apt-get install libgmp3-dev
+apt-get install -y git libgmp3-dev
 ```
-Get known your [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability), 
-see [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
+Within the `cuZK/test` directory, adjust the compilation scope in the headers of `Makefile`:
+```Makefile
+# cuZK/test/Makefile
+all: msma msmb  # limit the compilation scope if you like
+```
+and then run `make` (it will take a while!)
+```console
+root@7816e1643c2a:/home/cuZK/test# make
+```
 
+> NOTE:  See also more on [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability) in [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
 
 
 

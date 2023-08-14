@@ -1,3 +1,5 @@
+all: msma msmb  # limit the compilation scope if you like
+
 msma:
 	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestbn.cu libgmp.a ../depends/libff-cuda/curves/alt_bn128/alt_bn128_pp_host.cu  ../depends/libff-cuda/curves/alt_bn128/alt_bn128_init_host.cu  ../depends/libff-cuda/curves/alt_bn128/alt_bn128_g1_host.cu ../depends/libff-cuda/curves/alt_bn128/alt_bn128_g2_host.cu  ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu -o msmtesta
 msmb:
