@@ -35,7 +35,7 @@ apt-get install -y git libgmp3-dev
 Within the `cuZK/test` directory, adjust the compilation scope in the headers of `Makefile`:
 ```Makefile
 # cuZK/test/Makefile
-all: msma msmb  # limit the compilation scope if you like
+all: msma msmb  # limit the compilation scope to selected files
 ```
 and then run `make` (it will take a while!)
 ```console
