@@ -15,7 +15,10 @@ The original experiments were accompolished in the following setup:
 3. gcc 7.5.0
 4. Nvidia V100 (32 GB)
 
-I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which should match the installed CUDA version (check with `nvidia-smi`).
+
+# Build / Develop
+
+I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which should match the installed CUDA version (check with `nvidia-smi`). The image contains necessary CUDA tools.
 
 Start the container mounting the working directory with the github source code:
 ```console
@@ -44,25 +47,7 @@ root@7816e1643c2a:/home/cuZK/test# make
 
 > NOTE:  See also more on [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability) in [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
 
-
-
-## Build
-
-First we need to make sure [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-11-5-0-download-archive) is installed.
-
-Our GPU Implemetation of MSM relies on [`CUB`](https://nvlabs.github.io/cub/), which provides state-of-the-art, reusable software components for every layer of the CUDA programming model.
-
-By default, CUB is included in the CUDA Toolkit. 
-If there is no CUB after installing the CUDA Toolkit, it is no need to build CUB separately. CUB is implemented as a C++ header library. To use CUB primitives in your code, simply:
-1. Download and unzip the latest CUB distribution
-2. #include the <cub/cub.cuh> header file in your CUDA C++ sources. 
-3. Compile your program with NVIDIA's nvcc CUDA compiler, specifying a -I<path-to-CUB> include-path flag to reference the location of the CUB header library.
-
-After that, we build the library. (It will take some time to compile)
-```
-cd test
-make
-```
+## Run
 
 To run a test of an MSM of `2^20` scale and EC points on the BLS12-381 curve, run:
 ```
