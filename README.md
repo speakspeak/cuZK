@@ -16,7 +16,7 @@ The original experiments were accompolished in the following setup:
 4. Nvidia V100 (32 GB)
 
 
-# Build / Develop
+## Build / Develop
 
 I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which should match the installed CUDA version (check with `nvidia-smi`). The image contains necessary CUDA tools.
 
