@@ -155,7 +155,7 @@ void* multi_init_params(void* params)
     Mem* device_mem = (Mem*) params;
     cudaSetDevice(device_mem->device_id);
     size_t init_size = 1024 * 1024 * 1024;
-    init_size *= 1;
+    init_size *= 5;
     if( cudaMalloc( (void**)&device_mem->mem, init_size ) != cudaSuccess) printf("device malloc error!");
     libstl::initAllocator(device_mem->mem, init_size);
     init_params<<<1, 1>>>();
@@ -196,10 +196,13 @@ void* multi_MSM(void* msm)
 
     size_t lockMem;
     libstl::lock_host(lockMem);
+    printf( "warming up (1).. \n");
     libff::p_multi_exp_faster_multi_GPU_host<libff::G1<ppT>, libff::Fr<ppT>, libff::multi_exp_method_naive_plain>(it->mp->vg, it->mp->vf, it->ip->instance, it->ip->g1_instance, 512, 32);
     cudaDeviceSynchronize();
+    printf( "warming up (2).. \n");
     libff::p_multi_exp_faster_multi_GPU_host<libff::G1<ppT>, libff::Fr<ppT>, libff::multi_exp_method_naive_plain>(it->mp->vg, it->mp->vf, it->ip->instance, it->ip->g1_instance, 512, 32);
     cudaDeviceSynchronize();
+    printf( "warming up (3).. \n");
     libff::p_multi_exp_faster_multi_GPU_host<libff::G1<ppT>, libff::Fr<ppT>, libff::multi_exp_method_naive_plain>(it->mp->vg, it->mp->vf, it->ip->instance, it->ip->g1_instance, 512, 32);
     cudaDeviceSynchronize();
     libstl::resetlock_host(lockMem);
@@ -212,6 +215,7 @@ void* multi_MSM(void* msm)
 
     for(size_t i=0; i<1; i++)
     {
+        printf( "testing.. \n"); 
         it->res = libff::p_multi_exp_faster_multi_GPU_host<libff::G1<ppT>, libff::Fr<ppT>, libff::multi_exp_method_naive_plain>(it->mp->vg, it->mp->vf, it->ip->instance, it->ip->g1_instance, 512, 32);
         cudaDeviceSynchronize();
     }
@@ -320,10 +324,10 @@ int main(int argc, char* argv[])
     instance_init_host(&hip);
 
     // elements generation
-    printf( "Generate elements... ");
     MSM_params<bls12_381_pp>* mp[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
     {
+        printf( "Device %d: Generate elements... \n", i);
         cudaSetDevice(i);
         if( cudaMalloc( (void**)&mp[i], sizeof(MSM_params<bls12_381_pp>)) != cudaSuccess) printf("mp malloc error!\n");
         generate_MP<bls12_381_pp><<<1, 1>>>(mp[i], ip[i], num_v);
@@ -339,6 +343,7 @@ int main(int argc, char* argv[])
     MSM<bls12_381_pp> msm[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
     {
+        printf( "Device %d: Computing MSM... \n", i);
         msm[i].device_id = i;
         msm[i].mp = mp[i];
         msm[i].ip = ip[i];
@@ -352,10 +357,12 @@ int main(int argc, char* argv[])
     libff::G1<bls12_381_pp_host> hg1[deviceCount];
     for(size_t i=0; i < deviceCount; i++)
     {
+        printf( "Device %d: Transfering to Host... \n", i);
         cudaSetDevice(i);
         D2H<bls12_381_pp_host, bls12_381_pp>(&hg1[i], msm[i].res, &hip.h_g1_instance);
     }
 
+    printf( "Host: Reduction... \n");
     Reduce<bls12_381_pp_host>(hg1, &hip.h_instance, num_v);
 
     cudaDeviceReset();

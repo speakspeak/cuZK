@@ -18,7 +18,7 @@ The original experiments were accompolished in the following setup:
 
 ## Build / Develop
 
-I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which should match the installed CUDA version (check with `nvidia-smi`). The image contains necessary CUDA tools.
+I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which should match the installed NVIDIA drivers (check `nvidia-smi`). The image contains necessary CUDA tools.
 
 Start the container mounting the working directory with the github source code:
 ```console
@@ -28,7 +28,7 @@ docker run -d \
    --runtime=nvidia \
    --mount type=bind,source=$(pwd),target=/home \
    --privileged \
-   nvidia/cuda:11.6.2-devel-ubuntu20.04
+   nvidia/cuda:11.7.1-devel-ubuntu20.04
 ```
 Within the running container, install `git` and `libgmp3-dev`:
 ```console
@@ -46,6 +46,8 @@ root@7816e1643c2a:/home/cuZK/test# make
 ```
 
 > NOTE:  See also more on [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability) in [the documentation](https://developer.nvidia.com/cuda-gpus#compute).
+
+> NOTE: The original code reserves too much of RAM. This can be adjusted inside the function `multi_init_params`.
 
 ## Run
 
