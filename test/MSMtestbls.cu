@@ -61,6 +61,8 @@ void wait_for_threads(const CUTThread * threads, int num){
 
 #include <time.h>
 
+#include <nvml.h>
+
 using namespace libff;
 
 struct instance_params
@@ -207,15 +209,22 @@ void* multi_MSM(void* msm)
     cudaDeviceSynchronize();
     libstl::resetlock_host(lockMem);
 
+
+    printf( "testing.. \n");
+    unsigned long long energy_start, energy_end;
+    nvmlDevice_t device;
+    nvmlInit();
+    nvmlDeviceGetHandleByIndex(it->device_id, &device);
+    nvmlDeviceGetTotalEnergyConsumption(device, &energy_start);
+
     cudaEvent_t eventMSMStart, eventMSMEnd;
     cudaEventCreate( &eventMSMStart);
-	cudaEventCreate( &eventMSMEnd);
-    cudaEventRecord( eventMSMStart, 0); 
+    cudaEventCreate( &eventMSMEnd);
+    cudaEventRecord( eventMSMStart, 0);
     cudaEventSynchronize(eventMSMStart);
 
     for(size_t i=0; i<1; i++)
     {
-        printf( "testing.. \n"); 
         it->res = libff::p_multi_exp_faster_multi_GPU_host<libff::G1<ppT>, libff::Fr<ppT>, libff::multi_exp_method_naive_plain>(it->mp->vg, it->mp->vf, it->ip->instance, it->ip->g1_instance, 512, 32);
         cudaDeviceSynchronize();
     }
@@ -224,8 +233,11 @@ void* multi_MSM(void* msm)
     cudaEventSynchronize(eventMSMEnd);
     float   TimeMSM;
     cudaEventElapsedTime( &TimeMSM, eventMSMStart, eventMSMEnd );
-    printf( "Time thread %lu for MSM:  %3.5f ms\n", it->device_id, TimeMSM );
-
+    unsigned long long EnergyMSM;
+    nvmlDeviceGetTotalEnergyConsumption(device, &energy_end);
+    EnergyMSM = energy_end - energy_start;
+    printf( "Time thread %lu for MSM:  %3.5f ms\n, Energy: %llu mJ", it->device_id, TimeMSM, EnergyMSM );
+    nvmlShutdown();
     return 0;
 }
 
@@ -292,7 +304,7 @@ int main(int argc, char* argv[])
     size_t num_v = (size_t) (1 << log_size);
 
     // params init 
-    printf( "Init params... ");
+    printf( "Init params... \n");
     Mem device_mem[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
     {
@@ -306,7 +318,7 @@ int main(int argc, char* argv[])
     }
 
     // instance init
-    printf( "Init instances... ");
+    printf( "Init instances... \n");
     instance_params* ip[deviceCount];
     Instance instance[deviceCount];
     for(size_t i=0; i<deviceCount; i++)
@@ -353,6 +365,8 @@ int main(int argc, char* argv[])
     {
         end_thread(thread[i]);
     }
+
+    // reduction on host
 
     libff::G1<bls12_381_pp_host> hg1[deviceCount];
     for(size_t i=0; i < deviceCount; i++)

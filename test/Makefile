@@ -1,11 +1,11 @@
-all: msma msmb  # limit the compilation scope if you like
+all: msmb  # limit the compilation scope if you like
 
 msma:
-	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestbn.cu libgmp.a ../depends/libff-cuda/curves/alt_bn128/alt_bn128_pp_host.cu  ../depends/libff-cuda/curves/alt_bn128/alt_bn128_init_host.cu  ../depends/libff-cuda/curves/alt_bn128/alt_bn128_g1_host.cu ../depends/libff-cuda/curves/alt_bn128/alt_bn128_g2_host.cu  ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu -o msmtesta
+	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestbn.cu libgmp.a ../depends/libff-cuda/curves/alt_bn128/alt_bn128_pp_host.cu  ../depends/libff-cuda/curves/alt_bn128/alt_bn128_init_host.cu  ../depends/libff-cuda/curves/alt_bn128/alt_bn128_g1_host.cu ../depends/libff-cuda/curves/alt_bn128/alt_bn128_g2_host.cu  ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu  -l nvidia-ml -o msmtesta
 msmb:
-	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestbls.cu libgmp.a ../depends/libff-cuda/curves/bls12_381/bls12_381_pp_host.cu  ../depends/libff-cuda/curves/bls12_381/bls12_381_init_host.cu  ../depends/libff-cuda/curves/bls12_381/bls12_381_g1_host.cu ../depends/libff-cuda/curves/bls12_381/bls12_381_g2_host.cu  ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu -o msmtestb
+	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestbls.cu libgmp.a ../depends/libff-cuda/curves/bls12_381/bls12_381_pp_host.cu  ../depends/libff-cuda/curves/bls12_381/bls12_381_init_host.cu  ../depends/libff-cuda/curves/bls12_381/bls12_381_g1_host.cu ../depends/libff-cuda/curves/bls12_381/bls12_381_g2_host.cu  ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu  -l nvidia-ml -o msmtestb
 msmm:
-	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestmnt.cu libgmp.a ../depends/libff-cuda/curves/mnt4753/mnt4753_pp_host.cu ../depends/libff-cuda/curves/mnt4753/mnt4753_init_host.cu  ../depends/libff-cuda/curves/mnt4753/mnt4753_g1_host.cu ../depends/libff-cuda/curves/mnt4753/mnt4753_g2_host.cu ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu -o msmtestm
+	nvcc -arch=sm_35 -rdc=true --expt-extended-lambda ./MSMtestmnt.cu libgmp.a ../depends/libff-cuda/curves/mnt4753/mnt4753_pp_host.cu ../depends/libff-cuda/curves/mnt4753/mnt4753_init_host.cu  ../depends/libff-cuda/curves/mnt4753/mnt4753_g1_host.cu ../depends/libff-cuda/curves/mnt4753/mnt4753_g2_host.cu ../depends/libstl-cuda/memory.cu ../depends/libff-cuda/common/utils.cu ../depends/libff-cuda/mini-mp-cuda/mini-mp-cuda.cu  -l nvidia-ml -o msmtestm
 
 
 a:

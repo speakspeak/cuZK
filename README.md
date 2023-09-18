@@ -49,6 +49,20 @@ root@7816e1643c2a:/home/cuZK/test# make
 
 > NOTE: The original code reserves too much of RAM. This can be adjusted inside the function `multi_init_params`.
 
+## Profile
+
+Advanced profiling can be done with [NVIDIA Management Library](https://developer.nvidia.com/nvidia-management-library-nvml). 
+The querying API should be used around the code piece if interest, as follows:
+```cpp
+   unsigned long long energy_start, energy_end, energy_elapsed;
+   nvmlDeviceGetTotalEnergyConsumption(device, &energy_start);
+   // code to profile ...
+   nvmlDeviceGetTotalEnergyConsumption(device, &energy_end);
+   energy_elapsed = energy_end - energy_start;
+```
+> NOTE: The `nvml` library should be included in the source code with `#include <nvml.h>` and linked at compilation time with `-l nvidia-ml`.
+
+
 ## Run
 
 To run a test of an MSM of `2^20` scale and EC points on the BLS12-381 curve, run:
