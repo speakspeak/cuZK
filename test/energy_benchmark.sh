@@ -8,8 +8,7 @@ echo "Param,Mem,Graphics,Energy,Time" >> energy.log
 for n in 20 21 22; do
     # loop over clock frequencies
     for mem in 877; do
-        #for freq in $(nvidia-smi -q -d SUPPORTED_CLOCKS | awk '/Graphics.*MHz/{ print $3 }')
-        for freq in 135 247 510 772 1050 1200 1530; do 
+        for freq in $(nvidia-smi -q -d SUPPORTED_CLOCKS | awk '/Graphics.*MHz/{ print $3 }'); do
             # change GPU clock
             sudo nvidia-smi -ac $mem,$freq
             for i in {1..3}; do

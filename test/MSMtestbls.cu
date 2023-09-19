@@ -236,7 +236,7 @@ void* multi_MSM(void* msm)
     unsigned long long EnergyMSM;
     nvmlDeviceGetTotalEnergyConsumption(device, &energy_end);
     EnergyMSM = energy_end - energy_start;
-    printf( "Time thread %lu for MSM:  %3.5f ms\n, Energy: %llu mJ", it->device_id, TimeMSM, EnergyMSM );
+    printf( "Thread %lu for MSM, Time: %3.5f ms, Energy: %llu mJ\n", it->device_id, TimeMSM, EnergyMSM );
     nvmlShutdown();
     return 0;
 }
