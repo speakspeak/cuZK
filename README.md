@@ -24,7 +24,7 @@ The original experiments were accompolished in the following setup:
 
 ## Build / Develop
 
-I recommend to work under the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which contains building tools.
+Select the appropriate [NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda/tags) which contains building tools.
 Check the [compatibility of installed NVIDIA drivers](https://docs.nvidia.com/deploy/cuda-compatibility/#abstract).
 
 Start the container mounting the working directory with the github source code:
