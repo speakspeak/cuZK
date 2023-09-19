@@ -6,7 +6,7 @@ This library is an efficient GPU implemetation of zkSNARK. It contains source co
 
 > Note: The contributions of this fork are:
 > * improved reproducibility and scalability: using Docker for building, reduced memory footprint, tested various GPUs 
-> * added advanced profiling including energy consumption
+> * introduced profiling of time/energy performance
 
 ## License
 
