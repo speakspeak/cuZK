@@ -2,7 +2,9 @@
 
 This library is an efficient GPU implemetation of zkSNARK. It contains source code of the paper **cuZK: Accelerating Zero-Knowledge Proof with A Faster Parallel Multi-Scalar Multiplication Algorithm on GPUs** published at TCHES 2023.
 
-> Note: This fork improves reproducibility and scalability, as well as advanaced profiling including energy consumption. 
+> Note: The contributions of this fork are:
+> * improved reproducibility and scalability: using Docker for building, reduced memory footprint, tested various GPUs 
+> * added advanced profiling including energy consumption
 
 ## License
 
@@ -68,7 +70,12 @@ The querying API should be used around the code piece of interest; the example b
 The `nvml` library should be included in the source code with `#include <nvml.h>` and linked at compilation time with `-l nvidia-ml` option.
 
 Performance depends on the clock frequency; the range of allowed frequencies can be checked with `nvidia-smi -q -d SUPPORTED_CLOCKS`
-and the memory/graphics clocks can be adjusted with `nvidia-smi -ac $mem,$freq`. See the [script profiling the MSM algorithm under a range of frequencies](./test/energy_benchmark.sh). Here are results obtained on Tesla V100-SXM2-16GB:
+and the memory/graphics clocks can be adjusted with `nvidia-smi -ac $mem,$freq`. 
+
+See the [script profiling the MSM algorithm under a range of frequencies](./test/energy_benchmark.sh), and a [sample Python script to process results](./test/energy_benchmark.py).
+
+
+ Here are results obtained on Tesla V100-SXM2-16GB:
 
 ![Performance and energy consumption of MSM](./data/performance_MSM_V100.png)
 
