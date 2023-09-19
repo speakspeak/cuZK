@@ -12,7 +12,7 @@ This library is licensed under the Apache License Version 2.0 and MIT licenses.
 
 ## Requirements
 
-To compile and run the code you need a GPU with NVIDIA drivers installed; the CUDA Toolkit with compiling and runtime tools will be supplied by Docker.
+To compile and run the code you **only need a GPU with NVIDIA drivers installed**; the CUDA Toolkit with compiling and runtime tools will be supplied by Docker.
 
 The original experiments were accompolished in the following setup:
 
